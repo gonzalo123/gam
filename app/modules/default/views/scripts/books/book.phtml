@@ -1,0 +1,53 @@
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+<?php if ($this->data->status!=0) {?>
+        <td align="center">
+            <button dojoType="dijit.form.Button" onClick='Books.markAs(<?= $this->data->id?>, 0)'>Mark as <i>READ</i></button>
+        </td>
+<?php }?>
+<?php if ($this->data->status!=1) {?>
+        <td align="center">
+            <button dojoType="dijit.form.Button" onClick='Books.markAs(<?= $this->data->id?>, 1)'>Mark as <i>READING</i></button>
+        </td>
+<?php }?>
+<?php if ($this->data->status!=2) {?>        
+        <td align="center">
+            <button dojoType="dijit.form.Button" onClick='Books.markAs(<?= $this->data->id?>, 2)'>Mark as <i>TO READ</i></button>
+        </td>
+<?php }?>
+    </tr>
+</table>
+
+<div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" style="height: 350px; width: 650px;">
+	<div dojoType="dijit.layout.ContentPane" region="top" style="height: 50px">
+		<b><?= $this->data->title?></b><br/><i><?= $this->data->author?> (<?= $this->data->bookyear?>)</i>
+	</div>
+<?php if ($this->imageUrl) {?>
+	<div dojoType="dijit.layout.ContentPane" region="left" style="width: 200px;" align="center">
+		<img src="<?= $this->imageUrl?>" alt="<?= $this->data->title?>" height="<?= $this->imageHeight?>" width="<?= $this->imageWidth?>"/> 
+	</div>
+<?php }?>
+<?php if ($this->data->why || $this->content) {?>
+	<div dojoType="dijit.layout.ContentPane" region="center">
+<?php if ($this->data->why) {?>
+	   <b>Why I read this book:</b><br/>
+		<?= $this->data->why?><br/>
+<?php }?>
+<?php if ($this->content) {?>
+<br/><b>Content:</b><br/>
+<?= $this->content?>
+<?php }?>
+	</div>
+<?php }?>
+</div>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td align="left">
+            <button dojoType="dijit.form.Button" onClick='Books.deleteDialog(<?= $this->data->id?>)'>Delete</button>
+        </td>
+        <td align="right">
+            <button dojoType="dijit.form.Button" onClick='Books.editDialog(<?= $this->data->id?>)'>Edit info</button>
+        </td>
+    </tr>
+</table>

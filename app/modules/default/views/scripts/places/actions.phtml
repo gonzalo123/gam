@@ -1,0 +1,14 @@
+<button dojoType="dijit.form.Button" onClick='Places.add()'>Add</button>
+
+<table jsID='places.grd' dojoType="dojox.grid.DataGrid" 
+    clientSort="true"
+    store="strPlaces.list"
+    onRowDblClick ="Places.gridDblClick" 
+    style="width: 100%;" 
+    >
+    <thead>
+        <tr>
+            <th width="100%" field="title">Place</th>
+        </tr>
+    </thead>
+</table>

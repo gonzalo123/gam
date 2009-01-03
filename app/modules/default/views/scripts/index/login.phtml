@@ -1,0 +1,30 @@
+<div id="logInLoading" dojoType="dijit.layout.ContentPane" style="display:none">
+    <img src="http://o.aolcdn.com/dojo/1.2/dojox/image/resources/images/loading.gif" alt="loading" height="15px" width="15px"/>
+</div>
+<div id="logInDiv" dojoType="dijit.layout.ContentPane" style="display:<?= ($this->logged == 0) ? 'inline' : 'none'?>">
+    <div dojoType="dijit.form.DropDownButton">
+        <span>Login</span>
+        <div id='loginTooltip' dojoType="dijit.TooltipDialog" title="Enter Login information">
+            <form id="loginForm">
+                <table>
+                    <tr>
+                        <td><label for="name">Username: </label></td>
+                        <td><input dojoType="dijit.form.TextBox" type="text" name="user" style="width:100px;" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="name">Password: </label></td>
+                        <td><input dojoType="dijit.form.TextBox" type="password" name="password" style="width:100px;" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right">
+                            <button dojoType="dijit.form.Button" onClick='Main.login()'>Login</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="logOutDiv" dojoType="dijit.layout.ContentPane" style="display:<?= ($this->logged == 1) ? 'inline' : 'none'?>">
+    <button dojoType="dijit.form.Button" onClick='Main.logout()'>Log Out</button>
+</div>

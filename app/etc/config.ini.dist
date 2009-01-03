@@ -1,0 +1,18 @@
+[production]
+mvc.exceptions      =   "0"
+modules.default     =   "/app/modules/default/controllers"
+
+[staging : production]
+debug               =   "1"
+mvc.exceptions      =   "1"
+js.minify           =   "0"
+css.minify          =   "1"
+sitename            =   ""
+mymail              =   ""
+dojoStyle           =   "tundra"
+amazonkey           =   ""
+googlemapskey       =   ""
+db                  =   "Pdo_Sqlite"
+sqlite.dbHost       =   "/db/gam.sqlite"
+lucene.path         =   "/db/lucene"
+owner               =   ""

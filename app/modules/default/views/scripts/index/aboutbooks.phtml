@@ -1,0 +1,20 @@
+<p>
+I to read and <a href="#" onClick="Apps.startAppInTab('books', 'Books')">Books</a> is an aplication to track the books I read and I want to read. 
+</p>
+
+<p>
+This aplication uses one single dbTable and perform a simple CRUD (Create, read, update and delete) to this table.
+Also allows us a really simple workflow (to read -> reading -> read).
+</p>
+
+<p>
+The aplication uses <a target="_blank" href="http://aws.amazon.com/">Amazon's webservice</a> to fetch the image and the content of the book. Creates a dojo.store with JSON and display it in a dojox.datagrid.
+</p>
+
+<p>
+<h3>Todo:</h3>
+<ul>
+    <li>Paginate the datagrid. Now the aplications does not scale propertly. If I have read 200.000 books the aplication will be very slow and problaby will crash</li>
+    <li>Make a beter Amazon's search. Use the <a target="_blank" href="http://en.wikipedia.org/wiki/ISBN">ISBN</a> (convert it to <a target="_blank" href="http://en.wikipedia.org/wiki/ASIN">ASIN</a>). </li>
+</ul>
+</p>

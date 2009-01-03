@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title><?= $this->pageTitle ?></title>
+	<!-- Tags Dublin Core -->
+    <meta name="DC.Language" content="en_EN" />
+	<meta name="DC.Publisher" content="Gonzalo Ayuso" />
+	<meta name="DC.Creator" content="Gonzalo Ayuso" />
+
+	<?=
+	$this->headLink()
+	   ->appendStylesheet("http://ajax.googleapis.com/ajax/libs/dojo/1.2/dijit/themes/{$this->dojoStyle}/{$this->dojoStyle}.css")
+	   //->appendStylesheet('http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojox/grid/resources/Grid.css')
+	   ->appendStylesheet("http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojox/grid/resources/{$this->dojoStyle}Grid.css")
+       //->appendStylesheet('http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojox/grid/resources/nihiloGrid.css')
+	   ->appendStylesheet($this->css);
+	?> 
+	<?= 
+	$this->headScript()
+	   ->appendFile('http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojo/dojo.xd.js')
+	   ->appendFile($this->js); 
+	?>
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7eczuGhffqJZwjHqSG8_ChSx5CqyNL2x2CpPAnLRjeOsKF3h9RTxwN51TEMxoEFtu1E2oZUiFK8t6Q"
+      type="text/javascript"></script>
+</head>
+<body class="<?= $this->dojoStyle?>" onunload="GUnload()">
+	<div id="preloader"></div>
+    <div dojoType="dijit.layout.BorderContainer" gutters='false' design="headline" style="width: 100%; height: 100%; border: solid 0px;">
+        <div dojoType='dijit.Toolbar' region="bottom">
+            <span style="float:right;">
+                <div dojoType="dijit.form.DropDownButton">
+                    <span><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" title="Gonzalo Ayuso. Some rights reserved."/></span>
+                    <div dojoType="dijit.TooltipDialog">
+                        <?= $this->partial('index/license.phtml') ?>
+                    </div>
+                </div>
+            </span>
+            <div dojoType="dijit.form.DropDownButton">
+                <span>gonzalo123@gmail.com</span>
+                <div dojoType="dijit.TooltipDialog" id="dlgcontact2">
+                        <?= $this->partial('info/contact.phtml') ?>
+                </div>
+            </div>
+        </div>
+        <div dojoType='dijit.Toolbar' region="top">
+            <span style="float:right;">
+                <?= $this->partial('index/login.phtml', array('logged' => $this->logged)) ?>
+            </span>
+            <?= $this->partial('index/menu.phtml', array('logged' => $this->logged)) ?>
+        </div>
+    	<div dojoType="dijit.layout.TabContainer" region="center" id='tabs'>
+            <div dojoType="dijit.layout.ContentPane" title="Main" >
+                <?= $this->partial('index/maintab.phtml') ?>
+            </div>
+    	</div>
+    	
+    </div>
+    <div dojoType="dojox.widget.Toaster" id="toast" positionDirection="tr-down" duration="5000" style="display:hide"></div>
+</body>
+</html>

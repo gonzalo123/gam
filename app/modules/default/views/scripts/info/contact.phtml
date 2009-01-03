@@ -1,0 +1,26 @@
+<form id='contactFrm'>
+<p>Feel free sending me a mesage </p>
+<table cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            Subject:
+        </td>
+        <td>
+            <input name="subject" dojoType="dijit.form.TextBox" type="text" style="width:300px;" />
+        </td>
+    </tr>
+    <tr>    
+        <td>
+            Body:
+        </td>
+        <td>
+            <textarea name="body" dojoType="dijit.form.SimpleTextarea" style="width:300px;height:200px"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="right">
+            <button name='body' dojoType="dijit.form.Button" onClick='Main.sendEmail()'>Send</button>
+        </td>
+    </tr>
+</table>
+</form>

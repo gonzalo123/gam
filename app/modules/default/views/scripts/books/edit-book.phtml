@@ -1,0 +1,38 @@
+'Books.edit(<?= $this->data->id ?>)'
+<form id='edit_book_<?= $this->data->id ?>'>
+    <table>
+        <tr>
+            <td><label for="status">Status: </label></td>
+                <span>Read:</span>
+                <input dojoType="dijit.form.RadioButton" type="radio" name="status" value="0" <?php if($this->data->readChecked) {?>checked="<?= $this->data->readChecked?>"<?php }?>/>
+                <label>Reading:</label>
+                <input dojoType="dijit.form.RadioButton" type="radio" name="status" value="1" <?php if($this->data->readingChecked) {?>checked="<?= $this->data->readingChecked?>"<?php }?>/>
+                <label>To Read:</label>
+                <input dojoType="dijit.form.RadioButton" type="radio" name="status" value="2" <?php if($this->data->toReadChecked) {?>checked="<?= $this->data->toReadChecked?>"<?php }?>/>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="name">Title: </label></td>
+            <td><input dojoType="dijit.form.TextBox" type="text" name="title" style="width:300px;" value="<?= $this->data->title?>" /></td>
+        </tr>
+        <tr>
+            <td><label for="name">Author: </label></td>
+            <td><input dojoType="dijit.form.TextBox" type="text" name="author" style="width:300px;" value="<?= $this->data->author?>" /></td>
+        </tr>
+        <tr>
+            <td><label for="name">Book year: </label></td>
+            <td><input dojoType="dijit.form.TextBox" type="text" name="bookyear" style="width:300px;" value="<?= $this->data->bookyear?>" /></td>
+        </tr>
+        <tr>
+            <td><label for="body">Why: </label></td>
+            <td>
+                <textarea name="why" dojoType="dijit.form.SimpleTextarea" style="width:300px;height:200px"><?= $this->data->why?></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" colspan="2">
+                <button dojoType="dijit.form.Button" onClick='Books.edit(<?= $this->data->id ?>)'>Save</button>
+            </td>
+        </tr>
+    </table>
+</form>

@@ -1,0 +1,12 @@
+<div dojoType="dijit.layout.BorderContainer" design="headline" 
+    splitter='true' gutters='true' style="width: 100%; height: 100%; border: solid 0px;">
+    <div dojoType="dijit.layout.ContentPane" region="top" style="height: 80px;">
+        <?= $this->partial('places/header.phtml') ?>
+    </div>
+    <div dojoType="dijit.layout.ContentPane" region="left" style="width: 300px;">
+        <?= $this->partial('places/actions.phtml') ?>
+    </div>
+    <div dojoType="dijit.layout.ContentPane" region="center">
+        <?= $this->partial('places/map.phtml') ?>
+    </div>
+</div>

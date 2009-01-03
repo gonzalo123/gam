@@ -1,0 +1,19 @@
+<form id="frmAddNote">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td><label for="name">Title: </label></td>
+            <td><input dojoType="dijit.form.TextBox" type="text" name="title" style="width:300px;" value="" /></td>
+        </tr>
+        <tr>
+            <td><label for="body">Text: </label></td>
+            <td>
+                <textarea name="body" dojoType="dijit.form.SimpleTextarea" style="width:300px;height:200px"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" colspan="2">
+                <button dojoType="dijit.form.Button" onClick='Notes.saveNote()'>Save</button>
+            </td>
+        </tr>
+    </table>
+</form>

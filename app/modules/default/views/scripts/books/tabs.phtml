@@ -1,0 +1,12 @@
+<div dojoType="dijit.layout.TabContainer" style="width: 250px">
+    <div dojoType="dijit.layout.ContentPane"  title="Reading">
+        <?= $this->partial('books/reading.phtml')?>
+    </div>
+    <div dojoType="dijit.layout.ContentPane" selected="true" 
+        title="To read" style="width: 250px">
+        <?= $this->partial('books/toread.phtml')?>
+    </div>
+    <div dojoType="dijit.layout.ContentPane" title="Read" style="width: 250px">
+        <?= $this->partial('books/read.phtml')?>
+    </div>
+</div>

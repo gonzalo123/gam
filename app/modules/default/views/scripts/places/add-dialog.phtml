@@ -1,0 +1,39 @@
+<table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td width="30%" valign="top">
+
+        
+        
+<form id="frmAddPlace">
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td><label for="name">Title: </label></td>
+            <td><input dojoType="dijit.form.TextBox" type="text" name="title" style="width:150px;" value="" /></td>
+        </tr>
+        <tr>
+            <td><label for="body">Text: </label></td>
+            <td>
+                <textarea name="body" dojoType="dijit.form.SimpleTextarea" style="width:150px;height:100px"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" colspan="2">
+                <button dojoType="dijit.form.Button" onClick='Places.savePlace()'>Save</button>
+            </td>
+        </tr>
+    </table>
+</form>
+        
+        
+        
+        </td>
+        <td width="70%">
+        <div 
+            id="mapAdd"
+            dojoType="dijit.layout.ContentPane" 
+            postCreate='Places.gloadAdd();' 
+            style='width:100%;height:400px'>
+        </div>
+        </td>
+    </tr>
+</table>

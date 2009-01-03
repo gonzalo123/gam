@@ -1,0 +1,18 @@
+<p><b>Applications:</b></p>
+
+<div dojoType="dijit.layout.AccordionContainer" duration="200"
+    style="height: 300px; overflow: hidden">
+    <div dojoType="dijit.layout.AccordionPane" selected="true" title="Apps">
+        <?= $this->partial('index/aboutapps.phtml')?>
+    </div>
+    <div dojoType="dijit.layout.AccordionPane" selected="false" title="Books">
+        <?= $this->partial('index/aboutbooks.phtml')?>
+    </div>
+    <div dojoType="dijit.layout.AccordionPane" selected="false" title="Notes">
+        <?= $this->partial('index/aboutnotes.phtml')?>
+    </div>
+    <div dojoType="dijit.layout.AccordionPane" selected="false" title="Places">
+        <?= $this->partial('index/aboutplaces.phtml')?>
+    </div>
+   
+</div>

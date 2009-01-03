@@ -1,0 +1,30 @@
+<div dojoType="dijit.form.DropDownButton">
+    <span>Apps</span>
+    <div dojoType="dijit.Menu">
+        <div dojoType="dijit.MenuItem" onclick="Apps.startAppInTab('books', 'Books')">Books</div>
+        <div dojoType="dijit.MenuItem" onclick="Apps.startAppInTab('notes', 'Notes')">Notes</div>
+        <div dojoType="dijit.MenuItem" onclick="Apps.startAppInTab('places', 'Places')">Places</div>
+    </div>
+</div> 
+
+<div dojoType="dijit.form.DropDownButton">
+    <span>Help</span>
+    <div dojoType="dijit.Menu">
+        <div dojoType="dijit.PopupMenuItem">
+            <span>About Me</span>
+            <div dojoType="dijit.Menu">
+                <div dojoType="dijit.MenuItem" onclick="MenuActions.cv()">C.V.</div>
+                <div dojoType="dijit.MenuItem" onclick="MenuActions.contact()">Contact with me</div>
+            </div>
+        </div>
+        <div dojoType="dijit.PopupMenuItem">
+            <span>About Apps</span>
+            <div dojoType="dijit.Menu">
+                <div dojoType="dijit.MenuItem" onclick="MenuActions.aboutApp('books', 'Books')">Books</div>
+                <div dojoType="dijit.MenuItem" onclick="MenuActions.aboutApp('notes', 'Notes')">Notes</div>
+                <div dojoType="dijit.MenuItem" onclick="MenuActions.aboutApp('places', 'Places')">Places</div>
+            </div>
+        </div>
+        <div id='mnuAbout' dojoType="dijit.MenuItem" onclick="MenuActions.about()">About</div>
+    </div>
+</div>

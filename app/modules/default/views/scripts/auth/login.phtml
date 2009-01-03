@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>Login Page</title>
+        <style type="text/css">
+        <!--
+            label {
+                display: block;
+                float: left;
+                width: 120px;
+            }
+        -->
+        </style>
+    </head>
+
+    <body>
+        <h2>Login:</h2>
+            <? if ($this->_message) { ?>
+                <h2><?= $this->_message ?></h2>
+            <? } ?>
+            <p>Please enter your login and password.</p>
+            <form name="form1" method="post" action="/auth/login">
+                <label for="username">Login:</label>
+                <input type="text" name="username" value=""><br>
+                <label for="password">Password:</label>
+                <input type="password" name="password" value=""><br>
+                <input type="submit" name="Submit" value="Login">
+            </form>
+
+            <p><b>&nbsp;</b></p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+    </body>
+</html>

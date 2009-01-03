@@ -1,0 +1,12 @@
+
+<div dojoType="dijit.layout.AccordionContainer" duration="200">
+    <div dojoType="dijit.layout.AccordionPane"  title="Reading now">
+        <?= $this->partial('books/reading.phtml')?>
+    </div>
+    <div dojoType="dijit.layout.AccordionPane" selected="true" title="To read">
+        <?= $this->partial('books/toread.phtml')?>
+    </div>
+    <div dojoType="dijit.layout.AccordionPane" title="Read">
+        <?= $this->partial('books/read.phtml')?>
+    </div>
+</div>
