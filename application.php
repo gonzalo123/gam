@@ -47,6 +47,9 @@ class ZfApplication
 			throw new Exception ( 'Please set the environment using ::setEnvironment' );
 		}
 		$frontController = $this->initialize ();
+		$frontController->getRouter()->addRoute('requestVars', new Gam_Controller_Router_Route_RequestVars());
+
+
 		$this->setupRoutes ( $frontController );
 		$response = $this->dispatch ( $frontController );
 
@@ -91,6 +94,9 @@ class ZfApplication
 		
 		/* Zend_Acl_Role */
 		require_once 'Zend/Acl/Role.php';
+		
+		/* Ris_Controller_Router_Route_RequestVars */
+		//require_once 'Gam/Controller/Router/Route/RequestVars.php';
 		
 		/*
 		 * Load the given stage from our configuration file,

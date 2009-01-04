@@ -10,7 +10,13 @@ var Places = {
     
     loadMarks: function() {
         dojo.xhrPost({
-            url: '/default/places/getplaces/', 
+            var href = Apps.createUrl({
+                module: 'default',
+                controller: 'places',
+                action: 'getplaces',
+                params: {}
+            });
+            url: href, 
             load: function(responseObject, ioArgs){
                 dojo.forEach(Places.marks, function(item) {
                     Places.mainMap.removeOverlay(item);
@@ -79,10 +85,18 @@ var Places = {
     
     savePlace: function(){
         var point = Places.addMarker.getPoint();
-        
+        var href = Apps.createUrl({
+                module: 'default',
+                controller: 'places',
+                action: 'save',
+                params: {
+                    lat: point.lat(),
+                    lng: point.lng()
+                }
+            });
         Apps.dialogXhrPost({
             frmName: "frmAddPlace",
-            url: "/default/places/save/lat/" + point.lat() + "/lng/" + point.lng() + "/",
+            url: href,
             dialogName: Places.dialogAdd,
             cbkOnLoad: function() {
                 Apps.simpleGridRefresh(places.grd);
@@ -92,10 +106,19 @@ var Places = {
     },
     
     editDialogPlace: function(id) {
+        var href = Apps.createUrl({
+                module: 'default',
+                controller: 'places',
+                action: 'editDialog',
+                params: {
+                    id: id,
+                }
+            });
+            
         if (Places.dialogEdit == null) {
             Places.dialogEdit = new dijit.Dialog({ 
                 title: 'Edit Place',
-                href: '/default/places/editDialog/id/' + id,
+                href: href,
                 preventCache: true,
                 parseOnLoad: true
                 });
@@ -104,8 +127,16 @@ var Places = {
     },
     
     deletePlace: function(id) {
+        var href = Apps.createUrl({
+                module: 'default',
+                controller: 'places',
+                action: 'delete',
+                params: {
+                    id: id,
+                }
+            });
          dojo.xhrPost({
-            url: '/default/places/delete/id/' + id, 
+            url: href, 
             load: function(responseObject, ioArgs){
                 if (responseObject['status'] == 1) {
                     Main.toaster('message', responseObject['txt']);
@@ -138,11 +169,17 @@ var Places = {
         if (Places.addMarker) {
             Places.addMap.removeOverlay(Places.addMarker);
         }
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'places',
+            action: 'addDialog',
+            params: {}
+            });
         if (Places.dialogAdd == null) {
             Places.dialogAdd = new dijit.Dialog({ 
                 title: 'Add Place',
                 style: 'width:650px;height:450px',
-                href: '/default/places/addDialog',
+                href: href,
                 preventCache: true,
                 parseOnLoad: true
                 });
@@ -151,9 +188,15 @@ var Places = {
     },
     
     editPlace: function() {
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'places',
+            action: 'edit',
+            params: {}
+            });
         Apps.dialogXhrPost({
             frmName: "frmEditPlace",
-            url: '/default/places/edit/', 
+            url: href, 
             dialogName: Places.dialogEdit,
             cbkOnLoad: function() {
                 Apps.simpleGridRefresh(places.grd);

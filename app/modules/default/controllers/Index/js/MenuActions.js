@@ -5,10 +5,16 @@ MenuActions = {
     dialogAbout: null,
     
     _getDialog: function(title, id) {
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'info',
+            action: id,
+            params: {}
+        });
         return new dijit.Dialog({ 
             id: 'dlg' + id,
             title: title, 
-            href: '/default/info/' + id,
+            href: href,
             preventCache: false,
             parseOnLoad: true
             });
@@ -36,7 +42,12 @@ MenuActions = {
     },
     
     aboutApp: function(app, title) {
-        var href  = '/default/index/about' + app;
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'index',
+            action: 'about' + app,
+            params: {}
+        });
         if (MenuActions.dialogAbout != null) {
             MenuActions.dialogAbout.destroy();
         }

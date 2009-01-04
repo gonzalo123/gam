@@ -5,10 +5,16 @@ var Books = {
     dialogBook: [],
     addDialog: function() {
         if (Books.dialogReading == null) {
+            var href = Apps.createUrl({
+                module: 'default',
+                controller: 'books',
+                action: 'addDialog',
+                params: {}
+                });
             Books.dialogReading = new dijit.Dialog({ 
                 id: 'dialogAdd',
                 title: 'Add Reading book', 
-                href: '/default/books/addDialog',
+                href: href,
                 preventCache: true,
                 parseOnLoad: true
                 });
@@ -17,9 +23,15 @@ var Books = {
     },
     
     saveReading: function(){
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'books',
+            action: 'save',
+            params: {}
+            });
         Apps.dialogXhrPost({
             frmName: "frmAddReading",
-            url: "/default/books/save/",
+            url: href,
             dialogName: 'dialogAdd',
             cbkOnLoad: function() {
                 Books.refreshAllGrids();
@@ -37,10 +49,16 @@ var Books = {
         if (Books.dialogBook[id]!=undefined) {
             Books.dialogBook[id].destroy();
         }
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'books',
+            action: 'book',
+            params: {id: id}
+            });
         Books.dialogBook[id] = new dijit.Dialog({ 
             id: 'book_' + id,
             title: 'Book', 
-            href: '/default/books/book/id/' + id,
+            href: href,
             preventCache: true,
             parseOnLoad: true
             });
@@ -55,8 +73,14 @@ var Books = {
     },
     
     markAs: function(id, status) {
+        var href = Apps.createUrl({
+                module: 'default',
+                controller: 'books',
+                action: 'markas',
+                params: {id: id, status: status}
+                });
         Apps.dialogXhrPost({
-            url: '/default/books/markas/id/' + id + '/status/' + status, 
+            url: href, 
             dialogName: 'book_' + id,
             cbkOnLoad: function(){
                 Books.refreshAllGrids();
@@ -66,10 +90,16 @@ var Books = {
     
     editDialog: function(id) {
         Books.dialogBook[id].destroy();
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'books',
+            action: 'editBook',
+            params: {id: id}
+            });
         Books.dialogBook[id] = new dijit.Dialog({ 
             id: 'book_' + id,
             title: 'Book', 
-            href: '/default/books/editBook/id/' + id,
+            href: href,
             preventCache: true,
             parseOnLoad: true
             });
@@ -77,9 +107,15 @@ var Books = {
     },
     
     edit: function(id) {
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'books',
+            action: 'doedit',
+            params: {id: id}
+            });
         Apps.dialogXhrPost({
             frmName: 'edit_book_' + id,
-            url: '/default/books/doedit/id/' + id, 
+            url: href, 
             dialogName: Books.dialogBook[id],
             cbkOnLoad: function() {
                 Books.openBookDialog(id);
@@ -89,8 +125,14 @@ var Books = {
     },
     
     delete: function(id) {
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'books',
+            action: 'dodelete',
+            params: {id: id}
+            });
         Apps.dialogXhrPost({
-            url: '/default/books/dodelete/id/' + id, 
+            url: href, 
             dialogName: Books.dialogBook[id],
             cbkOnLoad: function() {
                 Books.refreshAllGrids();
@@ -113,13 +155,18 @@ var Books = {
     },
     
     search: function() {
-        query = dojo.formToQuery('books.find');
-        url = "/default/books/search/?" + query;  
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'books',
+            action: 'search',
+            params: dojo.formToObject('books.find')
+            });
+                
         if (books.luceneresults.store) {
             books.luceneresults.store.close();
         }
         books.luceneresults.store = new dojo.data.ItemFileReadStore({
-            url: url,
+            url: href,
             urlPreventCache: 1,
             clearOnClose: true,
             });

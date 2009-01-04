@@ -1,9 +1,42 @@
 var remoteScriptValue = null;
 var Apps = {
+    createUrl: function(url) {
+        var params = undefined;
+        for(var index in url.params){
+            params = '&' + index + '=' + url.params[index];
+        }
+        var out = '?' + 
+            'module=' + url.module + '&' +
+            'controller=' + url.controller + '&' +
+            'action=' + url.action;
+        if (params != undefined) {
+            out += params; 
+        }
+        return out;
+    }, 
+    
     startAppInTab: function(app, title) 
     {
-        var jsUrl = '/default/' + app + '/js/file/init';
-        var href  = '/default/' + app + '/index';
+        //var jsUrl = '/default/' + app + '/js/file/init';
+        //var href  = '/default/' + app + '/index';
+        
+        var jsUrl = Apps.createUrl({
+            module: 'default',
+            controller: app,
+            action: 'js',
+            params: {
+                file: 'init'
+            }
+        });
+        
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: app,
+            action: 'index',
+            params: {}
+        });
+        
+        
         remoteScriptFlag = undefined;
         dojo.io.script.get({
             url: jsUrl, 

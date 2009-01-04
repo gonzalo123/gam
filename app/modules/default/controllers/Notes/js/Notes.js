@@ -5,11 +5,17 @@ var Notes = {
     dialogNote: null,
     
     addNoteDialog: function() {
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'notes',
+            action: 'addNoteDialog',
+            params: {}
+        });
         if (Notes.dialogAddNote == null) {
             Notes.dialogAddNote = new dijit.Dialog({ 
                 title: 'Add new Mental Note', 
                 id: 'dialogAddNote',
-                href: '/default/notes/addNoteDialog',
+                href: href,
                 preventCache: true,
                 parseOnLoad: true
                 });
@@ -18,21 +24,32 @@ var Notes = {
     },
     
     saveNote: function() {
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'notes',
+            action: 'addnote',
+            params: {}
+        });
         Apps.dialogXhrPost({
             frmName: "frmAddNote",
-            url: "/default/notes/addnote/",
+            url: addnote,
             dialogName: 'dialogAddNote'
         });
     },
     
     find: function() {
-        query = dojo.formToQuery('form.notes.find');
-        url = "/default/notes/storeGrd/?" + query;    
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'notes',
+            action: 'storeGrd',
+            params: dojo.formToObject('form.notes.find')
+        });
+        
         if (notes.findGrd.store) {
             notes.findGrd.store.close();
         }
         notes.findGrd.store = new dojo.data.ItemFileReadStore({
-            url: url,
+            url: href,
             urlPreventCache: 1,
             clearOnClose: true,
             });
@@ -40,7 +57,6 @@ var Notes = {
     },
     
     gridDblClick: function(e) {
-        console.log(e);
         var index = e.rowIndex;
         var id = e.grid._by_idx[index].item.id;
         Notes.openNoteDialog(id);
@@ -50,9 +66,16 @@ var Notes = {
         if (Notes.dialogNote != null) {
             Notes.dialogNote.destroy();
         }
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'notes',
+            action: 'note',
+            params: {id: id}
+        });
+        
         Notes.dialogNote = new dijit.Dialog({ 
             title: 'Add new Mental Note', 
-            href: '/default/notes/note/id/' + id,
+            href: href,
             preventCache: true,
             parseOnLoad: true
             });
@@ -60,9 +83,15 @@ var Notes = {
     },
     
     edit: function(id) {
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'notes',
+            action: 'doedit',
+            params: {}
+        });
         Apps.dialogXhrPost({
             frmName: 'notes.formNote_' + id,
-            url: '/default/notes/doedit/', 
+            url: href, 
             dialogName: Notes.dialogNote,
             cbkOnLoad: function() {
                 Notes.find();
@@ -85,8 +114,15 @@ var Notes = {
     },
     
     delete: function(id) {
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'notes',
+            action: 'dodelete',
+            params: {id: id}
+        });
+        
         Apps.dialogXhrPost({
-            url: '/default/notes/dodelete/id/' + id, 
+            url: href, 
             dialogName: Notes.dialogNote,
             cbkOnLoad: function() {
                 Notes.find();
