@@ -1,13 +1,13 @@
-<div dojoType="dijit.layout.BorderContainer" design="headline" 
+<div dojoType="dijit.layout.BorderContainer" design="headline"
     splitter='true' gutters='true' style="width: 100%; height: 100%; border: solid 0px;">
     <div dojoType="dijit.layout.ContentPane" region="top" style="height: 80px;">
         <?= $this->partial('books/header.phtml') ?>
     </div>
     <div dojoType="dijit.layout.ContentPane" region="center">
-        <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="false" persist="true" 
+        <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="false" persist="true"
             style="height: 100%; width: 350px; border: solid 0px;">
-            <div dojoType="dijit.layout.ContentPane" region="top" id="lucene">
-                <button dojoType="dijit.form.Button" onClick='Books.addNoteDialog()'>Add</button>
+            <div dojoType="dijit.layout.ContentPane" region="top">
+                <button dojoType="dijit.form.Button" onClick='Books.addDialog()'>Add</button>
             </div>
 		    <div dojoType="dijit.layout.ContentPane" region="center">
                 <?= $this->partial('books/tabs.phtml')?>

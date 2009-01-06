@@ -55,7 +55,7 @@ class ZfApplication
 
 		$this->render ( $response );
 	}
-	
+
 
 	/**
 	 * Initialization stage, loads configration files, sets up includes paths
@@ -70,39 +70,39 @@ class ZfApplication
 
 		/* Zend_Loader */
 		require_once 'Zend/Loader.php';
-			
+
 		/* Zend_Registry */
 		require_once 'Zend/Registry.php';
 
 		/* Zend_Config_ini */
 		require_once 'Zend/Config/Ini.php';
-        
+
 		/* Zend_Db */
 		require_once 'Zend/Db.php';
-		
+
 		/* Zend_Controller_Front */
 		require_once 'Zend/Controller/Front.php';
 
 		/* Zend_Controller_Router_Rewrite */
 		require_once 'Zend/Controller/Router/Rewrite.php';
-		
+
 		/* Zend_Db_Table_Abstract */
 		require_once 'Zend/Db/Table/Abstract.php';
-		
+
 		/* Zend_Acl */
 		require_once 'Zend/Acl.php';
-		
+
 		/* Zend_Acl_Role */
 		require_once 'Zend/Acl/Role.php';
-		
+
 		/* Ris_Controller_Router_Route_RequestVars */
 		//require_once 'Gam/Controller/Router/Route/RequestVars.php';
-		
+
 		/*
 		 * Load the given stage from our configuration file,
 		 * and store it into the registry for later usage.
 		 */
-		$config = new Zend_Config_Ini ( dirname ( __FILE__ ) . '/app/etc/config.ini', $this->getEnvironment () );
+		$config = new Zend_Config_Ini ( dirname ( __FILE__ ) . "/app/etc/config.prod.{$_SERVER["SERVER_NAME"]}.ini", $this->getEnvironment () );
 		Zend_Registry::set ( 'config', $config );
 		define('GamBASEPATH', dirname ( __FILE__ ));
 		switch ($config->db) {
@@ -111,19 +111,27 @@ class ZfApplication
                     'dbname' => GamBASEPATH . $config->sqlite->dbHost
                     ));
 		        break;
+            case 'Pdo_Mysql':
+                $db = Zend_Db::factory('Pdo_Mysql', array(
+                'host'     => $config->mysql->dbHost,
+                'username' => $config->mysql->username,
+                'password' => $config->mysql->password,
+                'dbname'   => $config->mysql->dbname
+                    ));
+                break;
 		}
 		Zend_Db_Table_Abstract::setDefaultAdapter($db);
         Zend_Registry::set ( 'config', $config );
         Zend_Registry::set ( 'db', $db );
-        
+
         $acl = new Zend_Acl();
         $acl->addRole(new Zend_Acl_Role('guest'))
             ->addRole(new Zend_Acl_Role('member'))
             ->addRole(new Zend_Acl_Role('admin'));
-            
-        $parents = array('guest', 'member', 'admin');    
-        $acl->addRole(new Zend_Acl_Role('gonzalo'), $parents);   
-         
+
+        $parents = array('guest', 'member', 'admin');
+        $acl->addRole(new Zend_Acl_Role('gonzalo'), $parents);
+
         Zend_Registry::set ( 'acl', $acl );
 		/*
 		 * Create an instance of the frontcontroller, and point it to our

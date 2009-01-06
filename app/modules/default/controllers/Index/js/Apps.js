@@ -1,25 +1,29 @@
 var remoteScriptValue = null;
 var Apps = {
-    createUrl: function(url) {
-        var params = undefined;
-        for(var index in url.params){
-            params = '&' + index + '=' + url.params[index];
-        }
-        var out = '?' + 
+    createUrl2: function(url) {
+        var out = '?' +
             'module=' + url.module + '&' +
             'controller=' + url.controller + '&' +
             'action=' + url.action;
-        if (params != undefined) {
-            out += params; 
+        if (url.params) {
+            for(var index in url.params){
+                out += '&' + index + '=' + url.params[index];
+            }
         }
         return out;
-    }, 
-    
-    startAppInTab: function(app, title) 
+    },
+    createUrl: function(url) {
+        var out = '/' + url.module + '/' + url.controller + '/' + url.action;
+        if (url.params) {
+            for(var index in url.params){
+                out += '/' + index + '/' + url.params[index];
+            }
+        }
+        return out;
+    },
+
+    startAppInTab: function(app, title)
     {
-        //var jsUrl = '/default/' + app + '/js/file/init';
-        //var href  = '/default/' + app + '/index';
-        
         var jsUrl = Apps.createUrl({
             module: 'default',
             controller: app,
@@ -28,18 +32,18 @@ var Apps = {
                 file: 'init'
             }
         });
-        
+
         var href = Apps.createUrl({
             module: 'default',
             controller: app,
             action: 'index',
             params: {}
         });
-        
-        
+
+
         remoteScriptFlag = undefined;
         dojo.io.script.get({
-            url: jsUrl, 
+            url: jsUrl,
             checkString: "remoteScriptFlag",
             load: function(){
                 Tabs.addTab(app, title, href);
@@ -47,7 +51,7 @@ var Apps = {
             }
         });
     },
-    
+
     dialogXhrPost: function(params) {
         dojo.xhrPost({
             url: params.url,
@@ -62,22 +66,22 @@ var Apps = {
                     if (params.cbkOnLoad) {
                         params.cbkOnLoad()
                     }
-                } else if (responseObject['status'] == 0) { 
+                } else if (responseObject['status'] == 0) {
                     Main.toaster('error', responseObject['txt']);
-                } else if (responseObject['status'] == 9) { 
+                } else if (responseObject['status'] == 9) {
                     Main.toaster('error', responseObject['txt']);
                     dijit.byId(params.dialogName).onCancel();
-                    var prompt = new dijit.Dialog({ 
-                        title: 'Delete', 
+                    var prompt = new dijit.Dialog({
+                        title: 'Delete',
                         preventCache: true,
                         parseOnLoad: true,
                     });
-                    var content = ""; 
+                    var content = "";
                     content += "<p>"+responseObject['txt']+"</p>";
                     prompt.setContent(content);
                     prompt.show();
                 }
-                
+
             },
             error: function(response, ioArgs){
                 Main.toaster("error", "An error occurred, with response: " + response);
@@ -86,7 +90,7 @@ var Apps = {
             handleAs: "json"
           });
     },
-    
+
     simpleGridRefresh: function (grd)
     {
         grd.store.close();

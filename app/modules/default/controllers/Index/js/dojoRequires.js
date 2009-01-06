@@ -15,6 +15,8 @@ dojo.require("dijit.layout.ContentPane");
 dojo.require("dijit.form.CheckBox");
 dojo.require("dojo.io.script");
 dojo.require("dijit.layout.AccordionContainer");
+dojo.require("dijit.form.ValidationTextBox");
+dojo.require("dojox.validate.regexp");
 
 
 

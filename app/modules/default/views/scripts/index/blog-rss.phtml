@@ -1,0 +1,9 @@
+<b>Latest post on my <a href="<?= $this->myblog ?>" target="_blank">blog</a>:</b></br>
+<?php foreach ($this->channel['items'] as $item) { ?>
+    <li>
+    <a href="<?= $item['link'] ?>" target="_blank">
+        <img src="<?= Zend_Registry::get('config')->document_root ?>/images/external.png" height="10" width="10" border="0" alt="external"/>
+    </a>
+
+    <?= $item['title'] ?>&nbsp;(<?= $item['date']?>)</li>
+<?php } ?>

@@ -9,13 +9,13 @@ var Places = {
     marks: [], 
     
     loadMarks: function() {
+        var href = Apps.createUrl({
+            module: 'default',
+            controller: 'places',
+            action: 'getplaces',
+            params: {}
+        });
         dojo.xhrPost({
-            var href = Apps.createUrl({
-                module: 'default',
-                controller: 'places',
-                action: 'getplaces',
-                params: {}
-            });
             url: href, 
             load: function(responseObject, ioArgs){
                 dojo.forEach(Places.marks, function(item) {
@@ -111,7 +111,7 @@ var Places = {
                 controller: 'places',
                 action: 'editDialog',
                 params: {
-                    id: id,
+                    id: id
                 }
             });
             
@@ -132,7 +132,7 @@ var Places = {
                 controller: 'places',
                 action: 'delete',
                 params: {
-                    id: id,
+                    id: id
                 }
             });
          dojo.xhrPost({

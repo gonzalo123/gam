@@ -6,7 +6,7 @@ class Gam_Controller_Action extends Zend_Controller_Action
 	   'member' => 'allow',
 	   'admin'  => 'allow',
 	   );
-	
+
 	public function init()
 	{
 	    $this->acl($this->security);
@@ -15,29 +15,56 @@ class Gam_Controller_Action extends Zend_Controller_Action
     {
         $this->_helper->viewRenderer->setNoRender();
     }
-    
+
+    protected function exceptionMsg(Exception $e, $txt)
+    {
+        return (Zend_Registry::get('config')->debug == 1) ? $e->getMessage() : $txt;
+    }
+
     protected function acl($security)
     {
         $acl = Zend_Registry::get ( 'acl' );
         $module = Zend_Controller_Front::getInstance()->getRequest()->getModuleName();
-		$controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName(); 
-		
+		$controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
+
 		$resource = "{$module}_{$controller}";
-		
+
 	    $acl->add(new Zend_Acl_Resource($resource));
 	    foreach ($security as $role => $action) {
 	        $acl->$action($role, $resource);
 	    }
 	    $acl = Zend_Registry::set ( 'acl', $acl);
     }
-    
+
+    private function _url2($module, $controller, $action, $params=array())
+    {
+        $out = "?module={$module}&controller={$controller}&action={$action}";
+        if (count($params)>0) {
+            foreach ($params as $key=>$value) {
+                $out .= "&{$key}=" . urlencode($value);
+            }
+        }
+        return $out;
+    }
+
+    private function _url($module, $controller, $action, $params=array())
+    {
+        $out = "/{$module}/{$controller}/{$action}";
+        if (count($params)>0) {
+            foreach ($params as $key=>$value) {
+                $out .= "/{$key}/" . urlencode($value);
+            }
+        }
+        return $out;
+    }
+
     protected function getClientUrl($type, $namespace)
 	{
 	    $module = Zend_Controller_Front::getInstance()->getRequest()->getModuleName();
-		$controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName(); 
-		return "/{$module}/{$controller}/{$type}/file/{$namespace}";
+		$controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
+		return $this->_url($module, $controller, $type, array('file' => $namespace));
 	}
-	
+
     protected function getParam($param, $default=null)
     {
         Zend_Loader::loadClass('Zend_Filter_StripTags');
@@ -45,12 +72,12 @@ class Gam_Controller_Action extends Zend_Controller_Action
         return $filter->filter($this->_getParam($param, $default));
         //return $this->_getParam($param, $default);
     }
-    
+
     /**
      * @var Zend_Db_Adapter_Pdo_Abstract
      */
     protected $db;
-    
+
     public function __construct(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response, array $invokeArgs = array())
     {
         $this->db = Zend_Registry::get('db');
@@ -62,19 +89,19 @@ class Gam_Controller_Action extends Zend_Controller_Action
         $auth = Zend_Auth::getInstance();
         return $auth->getIdentity();
     }
-    
+
     protected function hasIdentity()
     {
         $auth = Zend_Auth::getInstance();
         return $auth->hasIdentity();
     }
-    
+
     function preDispatch()
     {
         $auth = Zend_Auth::getInstance();
-        
+
         $module = Zend_Controller_Front::getInstance()->getRequest()->getModuleName();
-		$controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName(); 
+		$controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
 		$resource = "{$module}_{$controller}";
         $acl = Zend_Registry::get ( 'acl' );
         $identity = is_null($auth->getIdentity()) ? 'guest' : $auth->getIdentity();

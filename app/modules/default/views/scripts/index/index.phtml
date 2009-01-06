@@ -1,25 +1,23 @@
 <html>
 <head>
 	<title><?= $this->pageTitle ?></title>
-	<!-- Tags Dublin Core -->
+    <!-- Tags Dublin Core -->
     <meta name="DC.Language" content="en_EN" />
-	<meta name="DC.Publisher" content="Gonzalo Ayuso" />
+    <meta name="DC.Publisher" content="Gonzalo Ayuso" />
 	<meta name="DC.Creator" content="Gonzalo Ayuso" />
 
 	<?=
 	$this->headLink()
 	   ->appendStylesheet("http://ajax.googleapis.com/ajax/libs/dojo/1.2/dijit/themes/{$this->dojoStyle}/{$this->dojoStyle}.css")
-	   //->appendStylesheet('http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojox/grid/resources/Grid.css')
 	   ->appendStylesheet("http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojox/grid/resources/{$this->dojoStyle}Grid.css")
-       //->appendStylesheet('http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojox/grid/resources/nihiloGrid.css')
 	   ->appendStylesheet($this->css);
-	?> 
-	<?= 
+	?>
+	<?=
 	$this->headScript()
 	   ->appendFile('http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojo/dojo.xd.js')
-	   ->appendFile($this->js); 
+	   ->appendFile($this->js);
 	?>
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7eczuGhffqJZwjHqSG8_ChSx5CqyNL2x2CpPAnLRjeOsKF3h9RTxwN51TEMxoEFtu1E2oZUiFK8t6Q"
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?= Zend_Registry::get('config')->googlemapskey ?>"
       type="text/javascript"></script>
 </head>
 <body class="<?= $this->dojoStyle?>" onunload="GUnload()">
@@ -52,7 +50,7 @@
                 <?= $this->partial('index/maintab.phtml') ?>
             </div>
     	</div>
-    	
+
     </div>
     <div dojoType="dojox.widget.Toaster" id="toast" positionDirection="tr-down" duration="5000" style="display:hide"></div>
 </body>
