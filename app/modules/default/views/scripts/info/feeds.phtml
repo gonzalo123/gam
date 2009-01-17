@@ -1,2 +1,19 @@
-<div dojoType="dijit.layout.ContentPane" title="Main" href='/default/index/blogRss'>
+<div id="feed-control">
+    <span style="color:#676767;font-size:11px;margin:10px;padding:4px;">Loading...</span>
 </div>
+
+<style type="text/css">
+    @import url("http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.css");
+</style>
+
+<script type="text/javascript">
+google.load('feeds', '1');
+dojo.addOnLoad(function(){
+    var options = {
+        stacked : true,
+        vertical : true,
+        title : "Feeds"
+    }
+    new GFdynamicFeedControl(gamJs.feeds, 'feed-control', options);
+})
+</script>

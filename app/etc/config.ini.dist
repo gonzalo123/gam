@@ -18,5 +18,4 @@ lucene.path         =   "/db/lucene"
 owner               =   "gonzalo"
 document_root       =   ""
 
-myblog.url          =   "http://gonzaloayuso.blogspot.com/"
-myblog.atom         =   "feeds/posts/default"
+myblog.atom         =   "http://gonzaloayuso.blogspot.com/feeds/posts/default"

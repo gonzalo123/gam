@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title><?= $this->pageTitle ?></title>
+    <!-- Tags Dublin Core -->
+    <meta name="DC.Language" content="en_EN" />
+    <meta name="DC.Publisher" content="Gonzalo Ayuso" />
+	<meta name="DC.Creator" content="Gonzalo Ayuso" />
+
+	<?=
+	$this->headLink()
+	   ->appendStylesheet("http://ajax.googleapis.com/ajax/libs/dojo/1.2/dijit/themes/{$this->dojoStyle}/{$this->dojoStyle}.css")
+	   ->appendStylesheet("http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojox/grid/resources/{$this->dojoStyle}Grid.css")
+	   ->appendStylesheet("http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojox/image/resources/image.css")
+	   ->appendStylesheet($this->css);
+	?>
+	<?=
+	$this->headScript()
+	   ->appendFile('http://ajax.googleapis.com/ajax/libs/dojo/1.2/dojo/dojo.xd.js')
+	   ->appendFile($this->js);
+	?>
+
+</head>
+<body class="<?= $this->dojoStyle?>">
+<div align="center" id="pics" width='100%'></div>
+</body>
+</html>

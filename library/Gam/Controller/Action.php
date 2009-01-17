@@ -114,6 +114,23 @@ class Gam_Controller_Action extends Zend_Controller_Action
 
     public function jsAction()
     {
+        $this->_helper->viewRenderer->setNoRender();
+        echo $this->_helper->getHelper ('FileContent')->js($this, $this->_getParam('file'));
+    }
+
+    public function cssAction()
+    {
+        $this->_helper->viewRenderer->setNoRender();
+        echo $this->_helper->getHelper ('FileContent')->css($this, $this->_getParam('file'));
+    }
+
+
+
+
+    public function jsAction2()
+    {
+
+
         $js = $this->_getParam ( 'file' );
         if (! is_null ( $js )) {
             $this->_helper->viewRenderer->setNoRender ();
@@ -123,7 +140,8 @@ class Gam_Controller_Action extends Zend_Controller_Action
         }
     }
 
-    public function cssAction()
+
+    public function cssAction2()
     {
         $css = $this->_getParam ( 'file' );
         if (! is_null ( $css )) {
