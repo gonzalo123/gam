@@ -55,10 +55,10 @@ class NotesController extends Gam_Controller_Action
             $status = 9;
         } else {
             try {
-                $this->db->beginTransaction();
+                $this->_db->beginTransaction();
 
-                $pk = (integer) $this->db->fetchOne("SELECT max(id) FROM tblNotes") + 1;
-        	    $this->db->query("
+                $pk = (integer) $this->_db->fetchOne("SELECT max(id) FROM tblNotes") + 1;
+        	    $this->_db->query("
         	       INSERT INTO tblNotes (id, title, body)
         	       VALUES (?, ?, ?) ",  array(
         	           $pk,
@@ -67,7 +67,7 @@ class NotesController extends Gam_Controller_Action
         	           ));
                 //$this->_addLuceneDoc($pk, $this->getParam('title'), $this->getParam('body'));
 
-                $this->db->commit();
+                $this->_db->commit();
                 $status = 1;
         	    $txt = 'Note saved';
             } catch (Exception $e) {
@@ -80,7 +80,7 @@ class NotesController extends Gam_Controller_Action
 
 	public function noteAction()
 	{
-        $data = $this->db->fetchRow("
+        $data = $this->_db->fetchRow("
 	       SELECT
 	           id id,
 	           title title,
@@ -121,7 +121,7 @@ class NotesController extends Gam_Controller_Action
         WHERE
             body like '%{$this->getParam('key')}%' OR
             title like '%{$this->getParam('key')}%'";
-	    echo new Zend_Dojo_Data('id', $this->db->fetchAll($sql), array(), Zend_Db::FETCH_OBJ);
+	    echo new Zend_Dojo_Data('id', $this->_db->fetchAll($sql), array(), Zend_Db::FETCH_OBJ);
 	}
 
 	private function _luceneDelete($id)
@@ -138,12 +138,12 @@ class NotesController extends Gam_Controller_Action
             $status = 9;
         } else {
             try {
-        	    $this->db->beginTransaction();
+        	    $this->_db->beginTransaction();
 
         	    //$this->_luceneDelete($this->getParam('id'));
         	    //$this->_addLuceneDoc($this->getParam('pk'), $this->getParam('title'), $this->getParam('body'));
 
-        	    $this->db->query("
+        	    $this->_db->query("
         	       UPDATE tblNotes
         	       SET
         	           title = ?,
@@ -153,7 +153,7 @@ class NotesController extends Gam_Controller_Action
                        $this->getParam('body'),
                        $this->getParam('id')
         	           ));
-        	    $this->db->commit();
+        	    $this->_db->commit();
         	    $status = 1;
         	    $txt = 'Note updated';
             } catch (Exception $e) {
@@ -172,14 +172,14 @@ class NotesController extends Gam_Controller_Action
             $status = 9;
         } else {
             try {
-    	       $this->db->beginTransaction();
+    	       $this->_db->beginTransaction();
     	       //$this->_luceneDelete($this->getParam('id'));
-    	       $this->db->query("
+    	       $this->_db->query("
     	           DELETE FROM tblNotes
     	           WHERE id = ?", array(
                     $this->getParam('id')
     	               ));
-    	       $this->db->commit();
+    	       $this->_db->commit();
     	       $status = 1;
         	   $txt = 'Note deleted';
             } catch (Exception $e) {

@@ -13,7 +13,6 @@ class IndexController extends Gam_Controller_Action
             'dynamic' => array(
                 'gamJs',
                 ),
-
         )
     );
 
@@ -91,11 +90,11 @@ class IndexController extends Gam_Controller_Action
     {
         $this->setNoRender();
         echo Zend_Json::encode(array(array(
-        'title' => 'My blog',
-        'url'   => Zend_Registry::get('config')->myblog->url . Zend_Registry::get('config')->myblog->atom
-        ),array(
-        'title' => 'TMZ',
-        'url' => 'http://www.tmz.com/rss.xml'
+            'title' => 'My blog',
+            'url'   => Zend_Registry::get('config')->myblog->url . Zend_Registry::get('config')->myblog->atom
+            ),array(
+            'title' => 'TMZ',
+            'url' => 'http://www.tmz.com/rss.xml'
         )));
     }
 }

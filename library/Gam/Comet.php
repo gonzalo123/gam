@@ -21,13 +21,13 @@ class Gam_Comet
     {
         $_timestamp = time();
         $out = array();
-        for($i=0; $i<self::COMET_TRIES; $i++) {
+        for ($i=0; $i<self::COMET_TRIES; $i++) {
             foreach ($ids as $id => $timestamp) {
                 if ((integer) $timestamp == 0) {
                     $timestamp = $_timestamp;
                 }
                 $fileTimestamp = self::_get($id);
-                if ($fileTimestamp > $timestamp){
+                if ($fileTimestamp > $timestamp) {
                     $out[$id] = ($output) ? $fileTimestamp : '';
                 }
                 clearstatcache();

@@ -30,26 +30,26 @@ class Gam_Controller_Router_Route_RequestVars implements Zend_Controller_Router_
         $frontController = Zend_Controller_Front::getInstance();
         $request = $frontController->getRequest();
         /* @var $request Zend_Controller_Request_Http */
-        
+
         $baseUrl = $request->getBaseUrl();
         if (strpos($baseUrl, 'index.php') !== false) {
             $url = str_replace('index.php', '', $baseUrl);
             $request->setBaseUrl($url);
         }
-        
+
         $params = $request->getParams();
-        
+
         if (array_key_exists('module', $params)
                 || array_key_exists('controller', $params)
                 || array_key_exists('action', $params)) {
-            
+
             $module = $request->getParam('module', $frontController->getDefaultModule());
             $controller = $request->getParam('controller', $frontController->getDefaultControllerName());
             $action = $request->getParam('action', $frontController->getDefaultAction());
 
-            $result = array('module' => $module, 
-                'controller' => $controller, 
-                'action' => $action, 
+            $result = array('module' => $module,
+                'controller' => $controller,
+                'action' => $action,
                 );
             $this->_current = $result;
             return $result;
@@ -66,27 +66,27 @@ class Gam_Controller_Router_Route_RequestVars implements Zend_Controller_Router_
     public function assemble($data = array(), $reset=false, $encode = false)
     {
         $frontController = Zend_Controller_Front::getInstance();
-        
-        if(!array_key_exists('module', $data) && !$reset 
+
+        if (!array_key_exists('module', $data) && !$reset
             && array_key_exists('module', $this->_current)
             && $this->_current['module'] != $frontController->getDefaultModule()) {
             $data = array_merge(array('module'=>$this->_current['module']), $data);
         }
-        if(!array_key_exists('controller', $data) && !$reset 
-            && array_key_exists('controller', $this->_current) 
+        if (!array_key_exists('controller', $data) && !$reset
+            && array_key_exists('controller', $this->_current)
             && $this->_current['controller'] != $frontController->getDefaultControllerName()) {
             $data = array_merge(array('controller'=>$this->_current['controller']), $data);
         }
-        if(!array_key_exists('action', $data) && !$reset 
+        if (!array_key_exists('action', $data) && !$reset
             && array_key_exists('action', $this->_current)
             && $this->_current['action'] != $frontController->getDefaultAction()) {
             $data = array_merge(array('action'=>$this->_current['action']), $data);
         }
-        
+
         $url = '';
-        if(!empty($data)) {
+        if (!empty($data)) {
             $urlParts = array();
-            foreach($data as $key=>$value) {
+            foreach ($data as $key => $value) {
                 $urlParts[] = $key . '=' . $value;
             }
             $url = '?' . implode('&', $urlParts);

@@ -36,7 +36,7 @@ class PlacesController extends Gam_Controller_Action
         WHERE
             id = ?
         ";
-	    $this->view->data = $this->db->fetchRow($sql, array($this->getParam('id')), Zend_Db::FETCH_OBJ);
+	    $this->view->data = $this->_db->fetchRow($sql, array($this->getParam('id')), Zend_Db::FETCH_OBJ);
 	    $a=1;
 	}
 
@@ -52,7 +52,7 @@ class PlacesController extends Gam_Controller_Action
         FROM
             tblPlaces
         ";
-	    return $this->db->fetchAll($sql, array(), Zend_Db::FETCH_OBJ);
+	    return $this->_db->fetchAll($sql, array(), Zend_Db::FETCH_OBJ);
 	}
 
 	public function editAction()
@@ -63,8 +63,8 @@ class PlacesController extends Gam_Controller_Action
             $status = 9;
         } else {
     	    try {
-        	    $this->db->beginTransaction();
-        	    $this->db->query("
+        	    $this->_db->beginTransaction();
+        	    $this->_db->query("
         	       UPDATE tblPlaces
         	       SET
         	           title = ?,
@@ -75,7 +75,7 @@ class PlacesController extends Gam_Controller_Action
         	           $this->getParam('body'),
         	           $this->getParam('id')
         	           ));
-        	    $this->db->commit();
+        	    $this->_db->commit();
         	    $txt = "Place edit";
         	    $status = 1;
     	    } catch (Exception $e) {
@@ -94,9 +94,9 @@ class PlacesController extends Gam_Controller_Action
             $status = 9;
         } else {
     	    try {
-        	    $this->db->beginTransaction();
-        	    $id = (integer) $this->db->fetchOne("SELECT max(id) FROM tblPlaces") + 1;
-        	    $this->db->query("
+        	    $this->_db->beginTransaction();
+        	    $id = (integer) $this->_db->fetchOne("SELECT max(id) FROM tblPlaces") + 1;
+        	    $this->_db->query("
         	       INSERT INTO tblPlaces (id, lat, lng, title, body)
         	       VALUES (?, ?, ?, ?, ?) ",  array(
         	           $id,
@@ -105,7 +105,7 @@ class PlacesController extends Gam_Controller_Action
         	           $this->getParam('title'),
         	           $this->getParam('body')
         	           ));
-        	    $this->db->commit();
+        	    $this->_db->commit();
         	    $txt = "Place added";
         	    $status = 1;
     	    } catch (Exception $e) {
@@ -124,9 +124,9 @@ class PlacesController extends Gam_Controller_Action
             $status = 9;
         } else {
     	    try {
-        	    $this->db->beginTransaction();
-        	    $this->db->query("DELETE FROM tblPlaces WHERE id = ?",  array($this->getParam('id')));
-        	    $this->db->commit();
+        	    $this->_db->beginTransaction();
+        	    $this->_db->query("DELETE FROM tblPlaces WHERE id = ?",  array($this->getParam('id')));
+        	    $this->_db->commit();
         	    $txt = "Place deleted";
         	    $status = 1;
     	    } catch (Exception $e) {

@@ -60,12 +60,20 @@ var Books = {
             title: 'Book',
             href: href,
             preventCache: true,
-            parseOnLoad: true
+            parseOnLoad: true,
+            onClose: function() {Books.destroyDialogBook()},
+            onCancel : function() {Books.destroyDialogBook()}
+
+
             });
 
         Books.dialogBook[id].show();
     },
-
+    destroyDialogBook: function() {
+        for(var id in Books.dialogBook){
+            Books.dialogBook[id].destroyRecursive();
+        }
+    },
     refreshAllGrids: function() {
         Apps.simpleGridRefresh(books.reading);
             Apps.simpleGridRefresh(books.toread);
@@ -171,5 +179,54 @@ var Books = {
             clearOnClose: true,
             });
         books.luceneresults.sort();
+    },
+
+    amazonSearch: function (asin) {
+        var scriptElement = document.createElement("script");
+        scriptElement.setAttribute("id", "jsonScript");
+        scriptElement.setAttribute("src", "http://xml-us.amznxslt.com/onca/xml?Service=AWSECommerceService&SubscriptionId=19267494ZR5A8E2CGPR2&AssociateTag=kokogiak7-20&Operation=ItemLookup&Style=http://kokogiak.com/amazon/JSON/ajsonSingleAsin.xsl&ContentType=text/javascript&IdType=ASIN&ItemId=" + asin+ "&ResponseGroup=Large,ItemAttributes,OfferFull&CallBack=Books.amazonCallback");
+        scriptElement.setAttribute("type", "text/javascript");
+        document.documentElement.firstChild.appendChild(scriptElement);
+
+    },
+    amazonCallback: function (booksInfo) {
+    },
+
+    googleSearch: function (bibkeys) {
+        var scriptElement = document.createElement("script");
+        scriptElement.setAttribute("id", "jsonScript");
+        scriptElement.setAttribute("src", "http://books.google.com/books?bibkeys=" + bibkeys + "&jscmd=viewapi&callback=Books.googleCallback");
+        scriptElement.setAttribute("type", "text/javascript");
+        document.documentElement.firstChild.appendChild(scriptElement);
+
+    },
+
+    googleCallback: function (booksInfo) {
+        var div = dojo.byId('bookImg');
+        div.innerHTML = '';
+        var mainDiv = dojo.doc.createElement('div');
+        var x = 0;
+        for (i in booksInfo) {
+            // Create a DIV for each book
+            var book = booksInfo[i];
+            var thumbnailDiv = dojo.doc.createElement('div');
+            thumbnailDiv.className = "thumbnail";
+
+            // Add a link to each book's informtaion page
+            var a = dojo.doc.createElement("a");
+            a.href = book.info_url;
+            a.target = '_blank';
+
+            // Display a thumbnail of the book's cover
+            var img = dojo.doc.createElement("img");
+            img.src = book.thumbnail_url + '&zoom=1';
+            img.border = 0;
+            a.appendChild(img);
+            thumbnailDiv.appendChild(a);
+
+            mainDiv.appendChild(thumbnailDiv);
+        }
+        div.appendChild(mainDiv);
     }
 }
+

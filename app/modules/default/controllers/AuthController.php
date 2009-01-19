@@ -24,7 +24,7 @@ class AuthController extends Gam_Controller_Action
             $filter = new Zend_Filter_StripTags();
             $username = $this->getParam('user');
             $password = $this->getParam('password');
-            $authAdapter = new Zend_Auth_Adapter_DbTable($this->db);
+            $authAdapter = new Zend_Auth_Adapter_DbTable($this->_db);
             $authAdapter
                 ->setTableName('users')
                 ->setIdentityColumn('username')

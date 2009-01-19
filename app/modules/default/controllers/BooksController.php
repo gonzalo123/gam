@@ -6,6 +6,9 @@ class BooksController extends Gam_Controller_Action
             'dojoRequires.js',
             'dojoStores.js',
             'Books.js',
+            'dynamic' => array(
+                'gamJs',
+                ),
 	   )
 	);
 
@@ -15,6 +18,11 @@ class BooksController extends Gam_Controller_Action
             'toaster.css',
 	   )
 	);
+
+	public function gamJs()
+	{
+	    //echo "alert('1');";
+	}
 
 	public function indexAction()
 	{
@@ -49,7 +57,7 @@ class BooksController extends Gam_Controller_Action
 
 	private function _getBookInfo($id)
 	{
-	    return $this->db->fetchRow("
+	    return $this->_db->fetchRow("
 	       SELECT
 	           id id,
 	           title title,
@@ -57,7 +65,8 @@ class BooksController extends Gam_Controller_Action
 	           bookyear bookyear,
 	           readdate readdate,
 	           why why,
-	           status status
+	           status status,
+	           isbn isbn
 	       FROM
 	           tblBooks
 	       WHERE
@@ -67,13 +76,13 @@ class BooksController extends Gam_Controller_Action
 	public function bookeditAction()
 	{
 	    $this->view->data = $this->__getBookInfo($this->getParam('id'));
-	    list($this->view->imageUrl, $this->view->imageWidth, $this->view->imageHeight, $this->view->content) = $this->_tryCoverFromAmazon($this->view->data);
+	    //list($this->view->imageUrl, $this->view->imageWidth, $this->view->imageHeight, $this->view->content) = $this->_tryCoverFromAmazon($this->view->data);
 	}
 
 	public function bookAction()
 	{
 	    $this->view->data = $this->_getBookInfo($this->getParam('id'));
-	    list($this->view->imageUrl, $this->view->imageWidth, $this->view->imageHeight, $this->view->content) = $this->_tryCoverFromAmazon($this->view->data);
+	    //list($this->view->imageUrl, $this->view->imageWidth, $this->view->imageHeight, $this->view->content) = $this->_tryCoverFromAmazon($this->view->data);
 	}
 
 	private function _tryCoverFromAmazon($data)
@@ -127,16 +136,18 @@ class BooksController extends Gam_Controller_Action
             $status = 9;
         } else {
     	    try {
-    	        $this->db->beginTransaction();
-    	        $this->db->query("
+    	        $this->_db->beginTransaction();
+    	        $this->_db->query("
         	       UPDATE tblBooks
         	       SET
+        	           isbn = ?,
         	           title = ?,
         	           author = ?,
         	           bookyear = ?,
         	           why = ?,
         	           status = ?
         	       WHERE id = ?", array(
+    	               $this->getParam('isbn'),
     	               $this->getParam('title'),
     	               $this->getParam('author'),
     	               $this->getParam('bookyear'),
@@ -144,7 +155,8 @@ class BooksController extends Gam_Controller_Action
     	               $this->getParam('status'),
     	               $this->getParam('id'),
         	           ));
-    	        $this->db->commit();
+
+    	        $this->_db->commit();
     	        $status = 1;
     	        $txt = "Info updated";
             } catch (Exception $e) {
@@ -163,13 +175,13 @@ class BooksController extends Gam_Controller_Action
             $status = 9;
         } else {
     	    try {
-    	        $this->db->beginTransaction();
-    	        $this->db->query("
+    	        $this->_db->beginTransaction();
+    	        $this->_db->query("
         	       DELETE FROM tblBooks
         	       WHERE id = ?", array(
     	               $this->getParam('id'),
         	           ));
-    	        $this->db->commit();
+    	        $this->_db->commit();
     	        $status = 1;
     	        $txt = "Book deleted";
             } catch (Exception $e) {
@@ -188,13 +200,13 @@ class BooksController extends Gam_Controller_Action
             $status = 9;
         } else {
     	    try {
-    	        $this->db->beginTransaction();
-    	        $this->db->query("
+    	        $this->_db->beginTransaction();
+    	        $this->_db->query("
         	       UPDATE tblBooks SET status=? WHERE id = ? ",  array(
         	           $this->getParam('status'),
         	           $this->getParam('id')
         	           ));
-    	        $this->db->commit();
+    	        $this->_db->commit();
     	        $status = 1;
     	        $txt = 'Info updated succesfully';
             } catch (Exception $e) {
@@ -213,19 +225,20 @@ class BooksController extends Gam_Controller_Action
             $status = 9;
         } else {
     	    try {
-        	    $this->db->beginTransaction();
-        	    $id = (integer) $this->db->fetchOne("SELECT max(id) FROM tblBooks") + 1;
-        	    $this->db->query("
-        	       INSERT INTO tblBooks (id, title, author, bookyear, why, status)
-        	       VALUES (?, ?, ?, ?, ?, ?) ",  array(
+        	    $this->_db->beginTransaction();
+        	    $id = (integer) $this->_db->fetchOne("SELECT max(id) FROM tblBooks") + 1;
+        	    $this->_db->query("
+        	       INSERT INTO tblBooks (id, isbn, title, author, bookyear, why, status)
+        	       VALUES (?, ?, ?, ?, ?, ?, ?) ",  array(
         	           $id,
+        	           $this->getParam('isbn'),
         	           $this->getParam('title'),
         	           $this->getParam('author'),
         	           $this->getParam('bookyear'),
         	           $this->getParam('why'),
         	           $this->getParam('status'),
         	           ));
-        	    $this->db->commit();
+        	    $this->_db->commit();
         	    $txt = "Book added";
         	    $status = 1;
     	    } catch (Exception $e) {
@@ -250,6 +263,6 @@ class BooksController extends Gam_Controller_Action
             tblBooks
         WHERE
             status = ?";
-	    echo new Zend_Dojo_Data('id', $this->db->fetchAll($sql, array($this->getParam('type'))));
+	    echo new Zend_Dojo_Data('id', $this->_db->fetchAll($sql, array($this->getParam('type'))));
 	}
 }

@@ -1,4 +1,5 @@
 <?php
-interface Gam_Controller_Interface {
+interface Gam_Controller_Interface
+{
    public $js = array();
 }

@@ -7,16 +7,14 @@ var Slides = {
     imageItemStore: undefined,
 
     handle: function (key, value) {
-        console.log('something changed with ' + key + ' : ' + value);
+        //console.log('something changed with ' + key + ' : ' + value);
         dojo.xhrPost({
             url: '/slides/getSlides/key/' + key,
             load: function(responseObject, ioArgs){
-                console.log(responseObject);
                 Slides._slides = responseObject;
                 for(var index in responseObject){
 
                     var imgNode = dojo.doc.createElement('img');
-                    console.log(index);
                     dojo.attr(imgNode, 'src', Slides._slides[index]);
                     dojo.attr(imgNode, 'style', 'Display:none');
                     dojo.attr(imgNode, 'id', 'pics_' + i);
@@ -40,7 +38,6 @@ var Slides = {
     },
 
     changeImg: function(id, index) {
-        console.log('changeImg ' + index);
         dojo.attr(id + '.current', 'src', Slides._slides[index])
         dojo.attr(id + '.next', 'src', Slides._slides[index + 1])
     },

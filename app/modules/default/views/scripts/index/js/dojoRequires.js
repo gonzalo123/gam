@@ -33,6 +33,5 @@ var hideLoader = function(){
 dojo.addOnLoad(function(){
 	dojo.parser.parse();
 	hideLoader();
-
 });
 
