@@ -1,1 +1,0 @@
-dojo.require("dojo.data.ItemFileReadStore");
